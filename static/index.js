@@ -5,6 +5,7 @@ Vue.createApp({
         VField: VeeValidate.Field,
         ErrorMessage: VeeValidate.ErrorMessage,
     },
+    delimiters: ['[[', ']]'],
     data() {
         return {
             schema1: {

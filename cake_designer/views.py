@@ -21,7 +21,7 @@ def index(request):
                 phonenumber=request.GET["PHONE"],
                 mailbox=request.GET["EMAIL"]
             )
-        
+
         berries, decoration = None, None
 
         if request.GET.get("BERRIES"):
@@ -40,7 +40,7 @@ def index(request):
             customer=customer,
             delivery=delivery
         )
-        
+
     some_data = {
 
     }
@@ -51,8 +51,8 @@ def index(request):
 
 
 def lk(request):
-    
+
     context = {
-        
+
     }
     return render(request, 'index.html', context)
