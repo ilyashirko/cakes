@@ -19,8 +19,7 @@ def index(request):
         customer, _ = Customer.objects.get_or_create(
                 first_name=request.GET["NAME"],
                 phonenumber=request.GET["PHONE"],
-                mailbox=request.GET["EMAIL"],
-                delivery=delivery
+                mailbox=request.GET["EMAIL"]
             )
         
         berries, decoration = None, None
@@ -38,7 +37,8 @@ def index(request):
             decoration=decoration,
             signature=request.GET.get("WORDS"),
             comment=request.GET.get("COMMENTS"),
-            customer=customer
+            customer=customer,
+            delivery=delivery
         )
         
     some_data = {

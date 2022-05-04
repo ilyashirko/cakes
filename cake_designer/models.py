@@ -68,6 +68,13 @@ class Order(models.Model):
         verbose_name="Заказчик",
         related_name='orders'
     )
+    delivery = models.ForeignKey(
+        "Delivery",
+        on_delete=models.SET_NULL,
+        verbose_name="Параметры доставки",
+        related_name='customer',
+        null=True
+    )
     created_at = models.DateTimeField(
         "Заказ оформлен",
         auto_now_add=True,
@@ -124,14 +131,7 @@ class Customer(models.Model):
     first_name = models.CharField("Имя", max_length=50)
     phonenumber = PhoneNumberField("Номер телефона", region="RU")
     mailbox = models.EmailField("E-mail")
-    delivery = models.ForeignKey(
-        "Delivery",
-        on_delete=models.SET_NULL,
-        verbose_name="Параметры доставки",
-        related_name='customer',
-        null=True
-    )
-
+    
     def __str__(self):
         return self.first_name
 
