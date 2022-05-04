@@ -23,12 +23,12 @@ def index(request):
                 delivery=delivery
             )
         
-        berries, decorations = None * 2
+        berries, decoration = None, None
 
         if request.GET.get("BERRIES"):
             berries = Berry.objects.get(num=request.GET["BERRIES"])
         if request.GET.get("DECOR"):
-            decoration = Berry.objects.get(num=request.GET["DECOR"])
+            decoration = Decoration.objects.get(num=request.GET["DECOR"])
 
         Order.objects.create(
             levels=request.GET["LEVELS"],

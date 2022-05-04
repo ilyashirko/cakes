@@ -91,16 +91,25 @@ class Topping(models.Model):
     num = models.SmallIntegerField("Номер в админке", unique=True)
     title = models.CharField("Топпинг", max_length=30)
 
+    def __str__(self):
+        return self.title
+
 
 class Berry(models.Model):
     num = models.SmallIntegerField("Номер в админке", unique=True)
     title = models.CharField("Ягода", max_length=30)
+
+    def __str__(self):
+        return self.title
 
 
 class Decoration(models.Model):
     num = models.SmallIntegerField("Номер в админке", unique=True)
     title = models.CharField("Украшение", max_length=30)
 
+    def __str__(self):
+        return self.title
+        
 
 class Customer(models.Model):
     uuid = models.CharField(
