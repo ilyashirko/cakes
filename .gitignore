@@ -5,3 +5,4 @@ env
 CakeBake
 cake_designer/__pycache__
 cake_designer/migrations/__pycache__
+.vscode
