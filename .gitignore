@@ -1,0 +1,7 @@
+cakes/__pycache__
+env
+.env
+*.sqlite3
+CakeBake
+cake_designer/__pycache__
+cake_designer/migrations/__pycache__
