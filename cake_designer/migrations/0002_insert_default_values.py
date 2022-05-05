@@ -14,16 +14,32 @@ def inject_cake_params(apps, schema_editor):
         cake_options = json.load(default_data).get("cake_options")
 
         for num, form in enumerate(cake_options.get('forms')):
-            Form.objects.get_or_create(num=num + 1, title=form)
+            Form.objects.get_or_create(
+                num=num + 1,
+                title=form,
+                cost=cake_options['forms'][form]
+            )
 
         for num, topping in enumerate(cake_options.get('toppings')):
-            Topping.objects.get_or_create(num=num + 1, title=topping)
+            Topping.objects.get_or_create(
+                num=num + 1,
+                title=topping,
+                cost=cake_options['toppings'][topping]
+            )
 
         for num, berry in enumerate(cake_options.get('berries')):
-            Berry.objects.get_or_create(num=num + 1, title=berry)
+            Berry.objects.get_or_create(
+                num=num + 1,
+                title=berry,
+                cost=cake_options['berries'][berry]
+            )
 
         for num, decoration in enumerate(cake_options.get('decorations')):
-            Decoration.objects.get_or_create(num=num + 1, title=decoration)
+            Decoration.objects.get_or_create(
+                num=num + 1,
+                title=decoration,
+                cost=cake_options['decorations'][decoration]
+            )
 
 
 
@@ -33,7 +49,7 @@ def inject_cake_params(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('cake_designer', '0003_alter_order_decoration'),
+        ('cake_designer', '0001_initial'),
     ]
 
     operations = [

@@ -1,10 +1,16 @@
 from django.contrib import admin
-from .models import Berry, Decoration, Order, Customer, Delivery, Form, Topping
+from .models import Berry, Decoration, Order, Customer, Delivery, Form, Topping, Utm
 
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    pass
+    list_display = (
+        'created_at',
+        'delivery',
+        'customer',
+        'utm'
+        
+    )
 
 
 @admin.register(Form)
@@ -37,3 +43,6 @@ class DeliveryAdmin(admin.ModelAdmin):
     pass
 
 
+@admin.register(Utm)
+class UtmAdmin(admin.ModelAdmin):
+    pass
