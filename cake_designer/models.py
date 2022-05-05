@@ -75,6 +75,14 @@ class Order(models.Model):
         related_name='customer',
         null=True
     )
+    utm = models.ForeignKey(
+        "Utm",
+        on_delete=models.PROTECT,
+        verbose_name="UTM",
+        related_name="orders",
+        default=None,
+        null=True
+    )
     created_at = models.DateTimeField(
         "Заказ оформлен",
         auto_now_add=True,
@@ -143,3 +151,24 @@ class Delivery(models.Model):
 
     def __str__(self):
         return f'{self.address}  |  {self.datetime}'
+
+
+class Utm(models.Model):
+    source = models.CharField("Which site sent the traffic", max_length=100)
+    medium = models.CharField("Type of link", max_length=100)
+    campaign = models.CharField("Аdvertising company", max_length=100)
+    content = models.CharField(
+        "Content",
+        max_length=100,
+        default=None,
+        null=True
+    )
+    term = models.CharField(
+        "Searching terms",
+        max_length=100,
+        default=None,
+        null=True
+    )
+
+    def __str__(self):
+        return f"{self.source} | {self.campaign}"
