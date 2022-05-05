@@ -6,6 +6,14 @@ from .models import Berry, Customer, Decoration, Delivery, Form, Order, Topping
 
 
 def index(request):
+
+    if 'utm_source' in request.GET:
+        request.session["utm_source"] = request.GET["utm_source"]
+        request.session["utm_medium"] = request.GET["utm_medium"]
+        request.session["utm_campaign"] = request.GET["utm_campaign"]
+        request.session["utm_content"] = request.GET.get("utm_content")
+        request.session["utm_term"] = request.GET.get("utm_term")
+
     if 'LEVELS' in request.GET:
         delivery, _ = Delivery.objects.get_or_create(
             address=request.GET["ADDRESS"],
@@ -40,7 +48,8 @@ def index(request):
             customer=customer,
             delivery=delivery
         )
-
+        print(f'redirected from: {request.GET.get("redirected_from")}')
+    
     some_data = {
 
     }
