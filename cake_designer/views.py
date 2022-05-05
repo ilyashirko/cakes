@@ -6,7 +6,7 @@ from .models import Berry, Customer, Decoration, Delivery, Form, Order, Topping
 
 
 def index(request):
-    if 'LEVELS' in request.GET and :
+    if 'LEVELS' in request.GET:
         delivery, _ = Delivery.objects.get_or_create(
             address=request.GET["ADDRESS"],
             datetime=datetime.strptime(
