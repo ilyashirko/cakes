@@ -97,6 +97,7 @@ class Order(models.Model):
 class Form(models.Model):
     num = models.SmallIntegerField("Номер в админке", unique=True)
     title = models.CharField("Форма", max_length=30)
+    cost = models.SmallIntegerField("Добавочная стоимость")
 
     def __str__(self):
         return self.title
@@ -105,6 +106,7 @@ class Form(models.Model):
 class Topping(models.Model):
     num = models.SmallIntegerField("Номер в админке", unique=True)
     title = models.CharField("Топпинг", max_length=30)
+    cost = models.SmallIntegerField("Добавочная стоимость")
 
     def __str__(self):
         return self.title
@@ -113,6 +115,7 @@ class Topping(models.Model):
 class Berry(models.Model):
     num = models.SmallIntegerField("Номер в админке", unique=True)
     title = models.CharField("Ягода", max_length=30)
+    cost = models.SmallIntegerField("Добавочная стоимость")
 
     def __str__(self):
         return self.title
@@ -121,21 +124,13 @@ class Berry(models.Model):
 class Decoration(models.Model):
     num = models.SmallIntegerField("Номер в админке", unique=True)
     title = models.CharField("Украшение", max_length=30)
+    cost = models.SmallIntegerField("Добавочная стоимость")
 
     def __str__(self):
         return self.title
         
 
 class Customer(models.Model):
-    uuid = models.CharField(
-        "uuid",
-        unique=True,
-        default=uuid.uuid1,
-        max_length=36,
-        validators=[MinLengthValidator(36)],
-        primary_key=True,
-        editable=False
-    )
     first_name = models.CharField("Имя", max_length=50)
     phonenumber = PhoneNumberField("Номер телефона", region="RU")
     mailbox = models.EmailField("E-mail")

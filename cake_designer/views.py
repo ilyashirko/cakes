@@ -12,6 +12,9 @@ def index(request):
     print('-' * 50)
     print(json.dumps(dict(request.GET), indent=4, ensure_ascii=False))
     print(f'{"-" * 50}')
+    print(request.__dict__)
+    print(f'{"-" * 50}')
+    
 
     if 'utm_source' in request.GET:
         print("UTM WAS HESE")
@@ -32,7 +35,6 @@ def index(request):
             )
         else:
             utm = None
-        input(utm)
         delivery, _ = Delivery.objects.get_or_create(
             address=request.GET["ADDRESS"],
             datetime=datetime.strptime(
