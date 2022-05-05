@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class CakeDesignerConfig(AppConfig):
+class UsersConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'cake_designer'
+    name = 'users'

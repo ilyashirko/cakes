@@ -1,7 +1,11 @@
 import uuid
 
-from django.core.validators import (MaxValueValidator, MinLengthValidator,
-                                    MinValueValidator)
+from django.contrib.auth.models import User
+from django.core.validators import (
+    MaxValueValidator,
+    MinLengthValidator,
+    MinValueValidator
+)
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -127,6 +131,11 @@ class Customer(models.Model):
         validators=[MinLengthValidator(36)],
         primary_key=True,
         editable=False
+    )
+    user = models.OneToOneField(
+        User,
+        on_delete=models.SET_NULL,
+        null=True
     )
     first_name = models.CharField("Имя", max_length=50)
     phonenumber = PhoneNumberField("Номер телефона", region="RU")
