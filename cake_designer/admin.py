@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Berry, Decoration, Order, Customer, Delivery, Form, Topping, Utm
+from .models import Berry, Decoration, Order, Customer, Delivery, Form, Topping, Utm, Level
 
 
 @admin.register(Order)
@@ -45,4 +45,8 @@ class DeliveryAdmin(admin.ModelAdmin):
 
 @admin.register(Utm)
 class UtmAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(Level)
+class LevelAdmin(admin.ModelAdmin):
     pass
