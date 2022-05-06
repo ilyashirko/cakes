@@ -47,6 +47,7 @@ class DeliveryAdmin(admin.ModelAdmin):
 class UtmAdmin(admin.ModelAdmin):
     pass
 
+
 @admin.register(Level)
 class LevelAdmin(admin.ModelAdmin):
     pass

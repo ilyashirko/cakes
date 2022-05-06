@@ -77,6 +77,7 @@ class Order(models.Model):
         related_name='customer',
         null=True
     )
+    cost = models.SmallIntegerField("Стоимость", default=None, null=True)
     utm = models.ForeignKey(
         "Utm",
         on_delete=models.PROTECT,
