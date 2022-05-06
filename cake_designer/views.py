@@ -3,7 +3,7 @@ import json
 
 from django.shortcuts import render
 
-from .models import Berry, Customer, Decoration, Delivery, Form, Order, Topping, Utm
+from .models import Berry, Customer, Decoration, Delivery, Form, Order, Topping, Utm, Level
 
 
 def index(request):
@@ -35,6 +35,7 @@ def index(request):
             )
         else:
             utm = None
+
         delivery, _ = Delivery.objects.get_or_create(
             address=request.GET["ADDRESS"],
             datetime=datetime.strptime(
@@ -50,17 +51,20 @@ def index(request):
                 mailbox=request.GET["EMAIL"]
             )
 
-        berries, decoration = None, None
+        levels = Level.objects.get(num=request.GET["LEVELS"])
+        form = Form.objects.get(num=request.GET["FORM"])
+        topping = Topping.objects.get(num=request.GET["TOPPING"])
 
+        berries, decoration = None, None
         if request.GET.get("BERRIES"):
             berries = Berry.objects.get(num=request.GET["BERRIES"])
         if request.GET.get("DECOR"):
             decoration = Decoration.objects.get(num=request.GET["DECOR"])
 
         Order.objects.create(
-            levels=request.GET["LEVELS"],
-            form=Form.objects.get(num=request.GET["FORM"]),
-            topping=Topping.objects.get(num=request.GET["TOPPING"]),
+            levels=levels,
+            form=form,
+            topping=topping,
             berries=berries,
             decoration=decoration,
             signature=request.GET.get("WORDS"),
