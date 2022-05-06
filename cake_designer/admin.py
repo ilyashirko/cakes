@@ -1,5 +1,7 @@
 from django.contrib import admin
-from .models import Berry, Decoration, Order, Customer, Delivery, Form, Topping, Utm, Level
+
+from .models import (Berry, Customer, Decoration, Delivery, Form, Level, Order,
+                     Topping, Utm)
 
 
 @admin.register(Order)
@@ -8,8 +10,7 @@ class OrderAdmin(admin.ModelAdmin):
         'created_at',
         'delivery',
         'customer',
-        'utm'
-        
+        'utm',
     )
 
 

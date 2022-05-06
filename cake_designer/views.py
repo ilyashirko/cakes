@@ -1,20 +1,12 @@
 from datetime import datetime
-import json
 
 from django.shortcuts import render
 
-from .models import Berry, Customer, Decoration, Delivery, Form, Order, Topping, Utm, Level
+from .models import (Berry, Customer, Decoration, Delivery, Form, Level, Order,
+                     Topping, Utm)
 
 
 def index(request):
-    print('-' * 50)
-    print(json.dumps(dict(request.session), indent=4, ensure_ascii=False))
-    print('-' * 50)
-    print(json.dumps(dict(request.GET), indent=4, ensure_ascii=False))
-    print(f'{"-" * 50}')
-    print(request.__dict__)
-    print(f'{"-" * 50}')
-    
 
     if 'utm_source' in request.GET:
         print("UTM WAS HESE")
@@ -78,20 +70,12 @@ def index(request):
             cost=cost,
             utm=utm
         )
-        print(f'redirected from: {request.GET.get("redirected_from")}')
-    
-    some_data = {
 
-    }
-    context = {
-        'DATA': some_data
-    }
+    context = {}
     return render(request, 'index.html', context)
 
 
 def lk(request):
 
-    context = {
-
-    }
+    context = {}
     return render(request, 'index.html', context)

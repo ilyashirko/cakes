@@ -1,11 +1,6 @@
 import uuid
 
-from django.contrib.auth.models import User
-from django.core.validators import (
-    MaxValueValidator,
-    MinLengthValidator,
-    MinValueValidator
-)
+from django.core.validators import MinLengthValidator
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -105,7 +100,6 @@ class Level(models.Model):
         return str(self.num)
 
 
-
 class Form(models.Model):
     num = models.SmallIntegerField("Номер в админке", unique=True)
     title = models.CharField("Форма", max_length=30)
@@ -140,13 +134,13 @@ class Decoration(models.Model):
 
     def __str__(self):
         return self.title
-        
+
 
 class Customer(models.Model):
     first_name = models.CharField("Имя", max_length=50)
     phonenumber = PhoneNumberField("Номер телефона", region="RU")
     mailbox = models.EmailField("E-mail")
-    
+
     def __str__(self):
         return self.first_name
 
