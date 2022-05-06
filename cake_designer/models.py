@@ -20,13 +20,11 @@ class Order(models.Model):
         primary_key=True,
         editable=False
     )
-    levels = models.SmallIntegerField(
-        'Количество уровней',
-        default=1,
-        validators=[
-            MinValueValidator(1),
-            MaxValueValidator(3)
-        ]
+    levels = models.ForeignKey(
+        'Level',
+        on_delete=models.PROTECT,
+        verbose_name="Количество уровней",
+        related_name='orders'
     )
     form = models.ForeignKey(
         'Form',
