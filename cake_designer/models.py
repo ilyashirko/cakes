@@ -103,7 +103,7 @@ class Level(models.Model):
     cost = models.SmallIntegerField("Добавочная стоимость")
 
     def __str__(self):
-        return self.num
+        return str(self.num)
 
 
 
