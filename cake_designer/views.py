@@ -1,20 +1,12 @@
 from datetime import datetime
-import json
 
 from django.shortcuts import render
 
-from .models import Berry, Customer, Decoration, Delivery, Form, Order, Topping, Utm
+from .models import (Berry, Customer, Decoration, Delivery, Form, Level, Order,
+                     Topping, Utm)
 
 
 def index(request):
-    print('-' * 50)
-    print(json.dumps(dict(request.session), indent=4, ensure_ascii=False))
-    print('-' * 50)
-    print(json.dumps(dict(request.GET), indent=4, ensure_ascii=False))
-    print(f'{"-" * 50}')
-    print(request.__dict__)
-    print(f'{"-" * 50}')
-    
 
     if 'utm_source' in request.GET:
         print("UTM WAS HESE")
@@ -35,6 +27,7 @@ def index(request):
             )
         else:
             utm = None
+
         delivery, _ = Delivery.objects.get_or_create(
             address=request.GET["ADDRESS"],
             datetime=datetime.strptime(
@@ -50,39 +43,39 @@ def index(request):
                 mailbox=request.GET["EMAIL"]
             )
 
-        berries, decoration = None, None
+        levels = Level.objects.get(num=request.GET["LEVELS"])
+        form = Form.objects.get(num=request.GET["FORM"])
+        topping = Topping.objects.get(num=request.GET["TOPPING"])
 
+        cost = levels.cost + form.cost + topping.cost
+
+        berries, decoration = None, None
         if request.GET.get("BERRIES"):
             berries = Berry.objects.get(num=request.GET["BERRIES"])
+            cost += berries.cost
         if request.GET.get("DECOR"):
             decoration = Decoration.objects.get(num=request.GET["DECOR"])
+            cost += decoration.cost
 
         Order.objects.create(
-            levels=request.GET["LEVELS"],
-            form=Form.objects.get(num=request.GET["FORM"]),
-            topping=Topping.objects.get(num=request.GET["TOPPING"]),
+            levels=levels,
+            form=form,
+            topping=topping,
             berries=berries,
             decoration=decoration,
             signature=request.GET.get("WORDS"),
             comment=request.GET.get("COMMENTS"),
             customer=customer,
             delivery=delivery,
+            cost=cost,
             utm=utm
         )
-        print(f'redirected from: {request.GET.get("redirected_from")}')
-    
-    some_data = {
 
-    }
-    context = {
-        'DATA': some_data
-    }
+    context = {}
     return render(request, 'index.html', context)
 
 
 def lk(request):
 
-    context = {
-
-    }
+    context = {}
     return render(request, 'index.html', context)

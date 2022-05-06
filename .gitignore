@@ -6,3 +6,5 @@ CakeBake
 cake_designer/__pycache__
 cake_designer/migrations/__pycache__
 .vscode
+users/migrations/__pycache__
+users/__pycache__

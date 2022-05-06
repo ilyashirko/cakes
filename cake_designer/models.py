@@ -1,11 +1,6 @@
 import uuid
 
-from django.contrib.auth.models import User
-from django.core.validators import (
-    MaxValueValidator,
-    MinLengthValidator,
-    MinValueValidator
-)
+from django.core.validators import MinLengthValidator
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -20,13 +15,11 @@ class Order(models.Model):
         primary_key=True,
         editable=False
     )
-    levels = models.SmallIntegerField(
-        'Количество уровней',
-        default=1,
-        validators=[
-            MinValueValidator(1),
-            MaxValueValidator(3)
-        ]
+    levels = models.ForeignKey(
+        'Level',
+        on_delete=models.PROTECT,
+        verbose_name="Количество уровней",
+        related_name='orders'
     )
     form = models.ForeignKey(
         'Form',
@@ -79,6 +72,7 @@ class Order(models.Model):
         related_name='customer',
         null=True
     )
+    cost = models.SmallIntegerField("Стоимость", default=None, null=True)
     utm = models.ForeignKey(
         "Utm",
         on_delete=models.PROTECT,
@@ -96,6 +90,14 @@ class Order(models.Model):
     def __str__(self):
         return (f'{self.created_at.date()}: {self.customer} - '
                 f'{self.form} ({self.levels})')
+
+
+class Level(models.Model):
+    num = models.SmallIntegerField("Количество", unique=True)
+    cost = models.SmallIntegerField("Добавочная стоимость")
+
+    def __str__(self):
+        return str(self.num)
 
 
 class Form(models.Model):
@@ -132,13 +134,13 @@ class Decoration(models.Model):
 
     def __str__(self):
         return self.title
-        
+
 
 class Customer(models.Model):
     first_name = models.CharField("Имя", max_length=50)
     phonenumber = PhoneNumberField("Номер телефона", region="RU")
     mailbox = models.EmailField("E-mail")
-    
+
     def __str__(self):
         return self.first_name
 

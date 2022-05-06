@@ -5,6 +5,7 @@ import json
 
 
 def inject_cake_params(apps, schema_editor):
+    Level = apps.get_model('cake_designer', 'Level')
     Form = apps.get_model('cake_designer', 'Form')
     Topping = apps.get_model('cake_designer', 'Topping')
     Berry = apps.get_model('cake_designer', 'Berry')
@@ -12,6 +13,12 @@ def inject_cake_params(apps, schema_editor):
 
     with open('default_data.json', 'r') as default_data:
         cake_options = json.load(default_data).get("cake_options")
+
+        for num, level in enumerate(cake_options.get('levels')):
+            Level.objects.get_or_create(
+                num=num + 1,
+                cost=cake_options['levels'][level]
+            )
 
         for num, form in enumerate(cake_options.get('forms')):
             Form.objects.get_or_create(
@@ -40,10 +47,6 @@ def inject_cake_params(apps, schema_editor):
                 title=decoration,
                 cost=cake_options['decorations'][decoration]
             )
-
-
-
-
 
 
 class Migration(migrations.Migration):
