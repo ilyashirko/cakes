@@ -26,7 +26,7 @@ urlpatterns = [
     # path(settings.STATIC_URL, static),
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
-    path('lk', views.lk, 'lk'),
+    path('accounts/profile/', views.lk, name='lk'),
     path(
         'register/',
         users_views.register,
@@ -42,6 +42,4 @@ urlpatterns = [
         auth_views.LogoutView.as_view(template_name='users/logout.html'),
         name='logout',
     ),
-# ]
-
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
