@@ -98,6 +98,15 @@ class Order(models.Model):
                 f'{self.form} ({self.levels})')
 
 
+class Level(models.Model):
+    num = models.SmallIntegerField("Количество", unique=True)
+    cost = models.SmallIntegerField("Добавочная стоимость")
+
+    def __str__(self):
+        return self.num
+
+
+
 class Form(models.Model):
     num = models.SmallIntegerField("Номер в админке", unique=True)
     title = models.CharField("Форма", max_length=30)
