@@ -55,11 +55,15 @@ def index(request):
         form = Form.objects.get(num=request.GET["FORM"])
         topping = Topping.objects.get(num=request.GET["TOPPING"])
 
+        cost = levels.cost + form.cost + topping.cost
+
         berries, decoration = None, None
         if request.GET.get("BERRIES"):
             berries = Berry.objects.get(num=request.GET["BERRIES"])
+            cost += berries.cost
         if request.GET.get("DECOR"):
             decoration = Decoration.objects.get(num=request.GET["DECOR"])
+            cost += decoration.cost
 
         Order.objects.create(
             levels=levels,
@@ -71,6 +75,7 @@ def index(request):
             comment=request.GET.get("COMMENTS"),
             customer=customer,
             delivery=delivery,
+            cost=cost,
             utm=utm
         )
         print(f'redirected from: {request.GET.get("redirected_from")}')
