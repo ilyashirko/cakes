@@ -8,3 +8,7 @@ cake_designer/migrations/__pycache__
 .vscode
 users/migrations/__pycache__
 users/__pycache__
+Include/
+Lib/
+Scripts/
+pyvenv.cfg
