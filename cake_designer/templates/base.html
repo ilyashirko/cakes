@@ -61,7 +61,7 @@
 <!--					</a>-->
           {% if user.is_authenticated %}
             <span class="nav-link fw-lighter cake_grey fs_12" >
-                {{ user.email }}
+                <a class="nav-link fw-lighter cake_grey fs_12" href="{% url 'lk' %}">{{ user.email }}</a>
 			</span>
             <a class="nav-link fw-lighter cake_blue fs_12" href="{% url 'logout' %}">Выйти</a>
           {% else %}

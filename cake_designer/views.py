@@ -78,4 +78,4 @@ def index(request):
 def lk(request):
 
     context = {}
-    return render(request, 'index.html', context)
+    return render(request, 'lk.html', context)
