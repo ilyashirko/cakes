@@ -14,9 +14,14 @@ class UserRegisterForm(forms.ModelForm):
 
     def clean(self):
         super().clean()
+        errors = dict()
         email = self.cleaned_data.get('email')
         if User.objects.filter(email=email).exists():
-            raise ValidationError('E-mail адрес уже используется.')
+            errors['email'] = ValidationError(
+                'E-mail адрес уже используется.'
+            )
+        if errors:
+            raise ValidationError(errors)
         return self.cleaned_data
     
     def save(self, password):
