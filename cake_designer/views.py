@@ -2,8 +2,17 @@ from datetime import datetime
 
 from django.shortcuts import render
 
-from .models import (Berry, Customer, Decoration, Delivery, Form, Level, Order,
-                     Topping, Utm)
+from .models import (
+    Berry,
+    Customer,
+    Decoration,
+    Delivery,
+    Form,
+    Level,
+    Order,
+    Topping,
+    Utm
+)
 
 
 def index(request):
@@ -76,6 +85,14 @@ def index(request):
 
 
 def lk(request):
-
+    if 'EMAIL' in request.GET:
+        customer = Customer.objects.get_or_create(
+            user=request.user
+        )[0]
+        customer.mailbox = request.GET['EMAIL']
+        customer.first_name = request.GET['NAME']
+        customer.phonenumber = request.GET['PHONE']
+        customer.save()
+    
     context = {}
     return render(request, 'lk.html', context)
