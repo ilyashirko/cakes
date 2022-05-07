@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 from .models import (
@@ -84,6 +85,7 @@ def index(request):
     return render(request, 'index.html', context)
 
 
+@login_required(login_url='login')
 def lk(request):
     if 'EMAIL' in request.GET:
         customer = Customer.objects.get_or_create(
