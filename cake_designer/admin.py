@@ -16,22 +16,34 @@ class OrderAdmin(admin.ModelAdmin):
 
 @admin.register(Form)
 class FormAdmin(admin.ModelAdmin):
-    pass
+    list_display = (
+        'title',
+        'cost',
+    )
 
 
 @admin.register(Topping)
 class ToppingAdmin(admin.ModelAdmin):
-    pass
+    list_display = (
+        'title',
+        'cost',
+    )
 
 
-@admin.register(Berry)
+@admin.register(Berry)  
 class BerryAdmin(admin.ModelAdmin):
-    pass
+    list_display = (
+        'title',
+        'cost',
+    )
 
 
 @admin.register(Decoration)
 class DecorationAdmin(admin.ModelAdmin):
-    pass
+    list_display = (
+        'title',
+        'cost',
+    )
 
 
 @admin.register(Customer)
@@ -51,4 +63,7 @@ class UtmAdmin(admin.ModelAdmin):
 
 @admin.register(Level)
 class LevelAdmin(admin.ModelAdmin):
-    pass
+    list_display = (
+        'num',
+        'cost',
+    )
