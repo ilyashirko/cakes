@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 from .models import (
     Berry,
@@ -80,7 +80,10 @@ def index(request):
             cost=cost,
             utm=utm
         )
+        from .helpers import create_payment
+        payment = create_payment(cost)
 
+        return redirect(payment['url'])
     context = {}
     return render(request, 'index.html', context)
 
