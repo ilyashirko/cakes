@@ -1,3 +1,4 @@
+from pickle import TRUE
 import uuid
 
 from django.contrib.auth.models import User
@@ -70,7 +71,7 @@ class Order(models.Model):
         "Delivery",
         on_delete=models.SET_NULL,
         verbose_name="Параметры доставки",
-        related_name='customer',
+        related_name='orders',
         null=True
     )
     cost = models.SmallIntegerField("Стоимость", default=None, null=True)
@@ -80,7 +81,8 @@ class Order(models.Model):
         verbose_name="UTM",
         related_name="orders",
         default=None,
-        null=True
+        null=True,
+        blank=True
     )
     created_at = models.DateTimeField(
         "Заказ оформлен",
@@ -150,7 +152,12 @@ class Customer(models.Model):
 class Delivery(models.Model):
     address = models.CharField("Адрес доставки", max_length=100)
     datetime = models.DateTimeField("Дата и время доставки")
-    comment = models.CharField("Комментарий для курьера", max_length=1000)
+    comment = models.CharField(
+        "Комментарий для курьера",
+        max_length=1000,
+        blank=True
+    )
+    status = models.BooleanField(default=False)
 
     def __str__(self):
         return f'{self.address}  |  {self.datetime}'

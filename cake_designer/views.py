@@ -16,6 +16,7 @@ from .models import (
 )
 
 
+@login_required(login_url='login')
 def index(request):
 
     if 'utm_source' in request.GET:
@@ -48,10 +49,12 @@ def index(request):
         )
 
         customer, _ = Customer.objects.get_or_create(
-                first_name=request.GET["NAME"],
-                phonenumber=request.GET["PHONE"],
-                mailbox=request.GET["EMAIL"]
-            )
+            user=request.user
+        )
+        customer.mailbox = request.GET['EMAIL']
+        customer.first_name = request.GET['NAME']
+        customer.phonenumber = request.GET['PHONE']
+        customer.save()
 
         levels = Level.objects.get(num=request.GET["LEVELS"])
         form = Form.objects.get(num=request.GET["FORM"])
@@ -88,9 +91,9 @@ def index(request):
 @login_required(login_url='login')
 def lk(request):
     if 'EMAIL' in request.GET:
-        customer = Customer.objects.get_or_create(
+        customer, _ = Customer.objects.get_or_create(
             user=request.user
-        )[0]
+        )
         customer.mailbox = request.GET['EMAIL']
         customer.first_name = request.GET['NAME']
         customer.phonenumber = request.GET['PHONE']
