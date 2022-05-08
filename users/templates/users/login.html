@@ -11,6 +11,13 @@
     <div class="col-12 col-xxl-12 d-flex justify-content-center">
       <form method="post">
         {% csrf_token %}
+        {% if messages %}
+          <ul class="messages">
+              {% for message in messages %}
+              <li{% if message.tags %} class="{{ message.tags }} cake_blue"{% endif %}>{{ message }}</li>
+              {% endfor %}
+          </ul>
+        {% endif %}
         {% for field in form %}
         <label class="me-2 mt-4 mb-1 cake_blue" style="font-size: 26px">{{ field.label }}</label>
         <div class="col-12 col-md-12 col-lg-12 pt-2">
