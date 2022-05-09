@@ -18,7 +18,7 @@ from .models import (
 )
 
 
-@login_required(login_url='login')
+# @login_required(login_url='login')
 def index(request):
     if 'utm_source' in request.GET:
         request.session["utm_source"] = request.GET["utm_source"]
@@ -27,7 +27,7 @@ def index(request):
         request.session["utm_content"] = request.GET.get("utm_content")
         request.session["utm_term"] = request.GET.get("utm_term")
 
-    if 'LEVELS' in request.GET:
+    if 'LEVELS' in request.GET and request.user.is_authenticated:
         if 'utm_source' in request.session:
             utm, _ = Utm.objects.get_or_create(
                 source=request.session["utm_source"],
@@ -99,6 +99,8 @@ def index(request):
             payment_id=payment['id']
         )
         return redirect(payment['url'])
+    if 'LEVELS' in request.GET and not request.user.is_authenticated:
+        return redirect('login')
         
     context = {}
     return render(request, 'index.html', context)
