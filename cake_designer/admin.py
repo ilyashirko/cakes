@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import (Berry, Customer, Decoration, Delivery, Form, Level, Order,
+from .models import (Berry, Customer, Decoration, Delivery, Form, Level, Order, Promo,
                      Topping, Utm)
 
 
@@ -59,6 +59,15 @@ class DeliveryAdmin(admin.ModelAdmin):
 @admin.register(Utm)
 class UtmAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(Promo)
+class PromoAdmin(admin.ModelAdmin):
+    list_display = (
+        'title',
+        'number',
+        'is_valid',
+    )
 
 
 @admin.register(Level)

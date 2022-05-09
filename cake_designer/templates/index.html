@@ -202,6 +202,14 @@
 							<input v-model="Words" :class="Words ? 'cake__border_blue': ''" type="text" name="words" id="words" placeholder="Например: «С днем рождения!»..." class="form-control cake__textinput">
 						</div>
 					</div>
+					<div class="row mb-3">
+						<div class="col-5 col-md-4 col-lg-3">
+							<label class="me-3 fs_40 cake_blue" for="promo">Promocode</label>
+						</div>
+						<div class="col-7 col-md-8 col-lg-9 pt-2">
+							<input v-model="Promo" :class="Promo ? 'cake__border_blue': ''" type="text" name="promo" id="promo" placeholder="FIRST" class="form-control cake__textinput">
+						</div>
+					</div>
 					<div>
 						<label for="comment" class="cake_blue">Комментарий к заказу</label>
 						<textarea v-model="Comments" :class="Comments ? 'cake__border_blue': ''" name="comment" id="comment" rows="3" class="form-control mt-2 cake__textinput" style="resize: none"></textarea>
@@ -245,6 +253,7 @@
 					<br>
 					<input v-model="Words" type="text" name="WORDS">
 					<input v-model="Comments" type="text" name="COMMENTS">
+					<input v-model="Promo" type="text" name="PROMO">
 
 					<input v-model="Name" type="text" name="NAME">
 					<input v-model="Phone" type="tel" name="PHONE">
@@ -286,6 +295,11 @@
 									<v-field v-model="Email" :class="Email ? 'cake__border_blue': ''" type="email" name="email" id="email" placeholder="Введите почту" class="form-control my-3 cake__textinput"></v-field>
 									<v-field v-model="Email" type="email" name="email_format" class="d-none"></v-field>
 									<error-message name="email_format" class="position-absolute bottom-0 cake_pink fs_12"></error-message>
+								</div>
+								<div class="position-relative pb-1">
+									<v-field v-model="Promo" :class="Email ? 'cake__border_blue': ''" type="promo" name="promo" id="email" placeholder="Введите промокод" class="form-control my-3 cake__textinput"></v-field>
+									<v-field v-model="Promo" type="promo" name="promo_format" class="d-none"></v-field>
+									<error-message name="promo_format" class="position-absolute bottom-0 cake_pink fs_12"></error-message>
 								</div>
 							</div>
 							<div class="col-12 col-lg-4 d-flex justify-content-center justify-content-lg-end">

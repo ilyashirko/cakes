@@ -80,6 +80,12 @@ Vue.createApp({
                     }
                     return ' почту';
                 },
+                promo: (value) => {
+                    if (value) {
+                        return true;
+                    }
+                    return false
+                },
                 address: (value) => {
                     if (value) {
                         return true;
@@ -104,7 +110,8 @@ Vue.createApp({
                 Forms: ['не выбрано', 'Круг', 'Квадрат', 'Прямоугольник'],
                 Toppings: ['не выбрано', 'Без', 'Белый соус', 'Карамельный', 'Кленовый', 'Черничный', 'Молочный шоколад', 'Клубничный'],
                 Berries: ['нет', 'Ежевика', 'Малина', 'Голубика', 'Клубника'],
-                Decors: [ 'нет', 'Фисташки', 'Безе', 'Фундук', 'Пекан', 'Маршмеллоу', 'Марципан']
+                Decors: [ 'нет', 'Фисташки', 'Безе', 'Фундук', 'Пекан', 'Маршмеллоу', 'Марципан'],
+                Promo: ['', 'WYLSA', 'FIRST']
             },
             Costs: {
                 Levels: [0, 400, 750, 1100],
@@ -112,7 +119,8 @@ Vue.createApp({
                 Toppings: [0, 0, 200, 180, 200, 300, 350, 200],
                 Berries: [0, 400, 300, 450, 500],
                 Decors: [0, 300, 400, 350, 300, 200, 280],
-                Words: 500
+                Words: 500,
+                Promo: [0, 400, 750, ]
             },
             Levels: 0,
             Form: 0,
@@ -121,11 +129,13 @@ Vue.createApp({
             Decor: 0,
             Words: '',
             Comments: '',
+            Promo: 0,
             Designed: false,
 
             Name: '',
             Phone: null,
             Email: null,
+            Promo: null,
             Address: null,
             Dates: null,
             Time: null,
@@ -143,7 +153,7 @@ Vue.createApp({
             let W = this.Words ? this.Costs.Words : 0
             return this.Costs.Levels[this.Levels] + this.Costs.Forms[this.Form] +
                 this.Costs.Toppings[this.Topping] + this.Costs.Berries[this.Berries] +
-                this.Costs.Decors[this.Decor] + W
+                this.Costs.Decors[this.Decor] - this.Costs.Promo[this.Promo] + W
         }
     }
 }).mount('#VueApp')

@@ -1,4 +1,5 @@
 from datetime import datetime
+from unittest.mock import PropertyMock
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
@@ -11,6 +12,7 @@ from .models import (
     Form,
     Level,
     Order,
+    Promo,
     Topping,
     Utm
 )
@@ -19,7 +21,7 @@ from .models import (
 @login_required(login_url='login')
 def index(request):
     print(dir(request))
-    input(request.build_absolute_uri('media'))
+    print(request.GET)
     if 'utm_source' in request.GET:
         print("UTM WAS HESE")
         request.session["utm_source"] = request.GET["utm_source"]
@@ -71,6 +73,15 @@ def index(request):
             decoration = Decoration.objects.get(num=request.GET["DECOR"])
             cost += decoration.cost
 
+        try:
+            promo = Promo.objects.get(title=request.GET.get("PROMO"))
+        except Promo.DoesNotExist:
+            promo = None
+        if promo and promo.is_valid:
+            promo_cost = cost - promo.number
+        else:
+            promo_cost = cost
+        print(promo)
         Order.objects.create(
             levels=levels,
             form=form,
@@ -82,10 +93,12 @@ def index(request):
             customer=customer,
             delivery=delivery,
             cost=cost,
+            promo=promo,
+            promo_cost=promo_cost,
             utm=utm
         )
         from .helpers import create_payment
-        payment = create_payment(cost, request.build_absolute_uri('login'))
+        payment = create_payment(promo_cost, request.build_absolute_uri('login'))
         return redirect(payment['url'])
         
     context = {}
