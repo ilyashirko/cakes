@@ -18,8 +18,8 @@ from .models import (
 
 @login_required(login_url='login')
 def index(request):
-    #print(dir(request))
-    #input(request.build_absolute_uri('media'))
+    print(dir(request))
+    input(request.build_absolute_uri('media'))
     if 'utm_source' in request.GET:
         print("UTM WAS HESE")
         request.session["utm_source"] = request.GET["utm_source"]
@@ -86,7 +86,7 @@ def index(request):
         )
         from .helpers import create_payment
         payment = create_payment(cost, request.build_absolute_uri('login'))
-
+        return redirect(payment['url'])
         
     context = {}
     return render(request, 'index.html', context)
