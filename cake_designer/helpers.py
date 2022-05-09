@@ -5,7 +5,7 @@ from django.conf import settings
 from yookassa import Configuration, Payment
 
 
-def create_payment(amount):
+def create_payment(amount, return_url):
     Configuration.account_id = settings.SHOP_ID
     Configuration.secret_key = settings.YOOKASSA_API_KEY
     
@@ -16,7 +16,7 @@ def create_payment(amount):
         },
         'confirmation': {
             'type': 'redirect',
-            'return_url': 'https://www.merchant-website.com/return_url'
+            'return_url': return_url #'https://www.merchant-website.com/return_url'
         },
         'capture': True,
         'description': 'Оплата торта'
