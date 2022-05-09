@@ -1,9 +1,9 @@
 from datetime import datetime
-from unittest.mock import PropertyMock
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
+from .helpers import check_payment, create_payment
 from .models import (
     Berry,
     Customer,
@@ -20,10 +20,7 @@ from .models import (
 
 @login_required(login_url='login')
 def index(request):
-    print(dir(request))
-    print(request.GET)
     if 'utm_source' in request.GET:
-        print("UTM WAS HESE")
         request.session["utm_source"] = request.GET["utm_source"]
         request.session["utm_medium"] = request.GET["utm_medium"]
         request.session["utm_campaign"] = request.GET["utm_campaign"]
@@ -81,7 +78,10 @@ def index(request):
             promo_cost = cost - promo.number
         else:
             promo_cost = cost
-        print(promo)
+        payment = create_payment(
+            promo_cost,
+            request.build_absolute_uri('accounts/profile/')
+        )
         Order.objects.create(
             levels=levels,
             form=form,
@@ -95,10 +95,9 @@ def index(request):
             cost=cost,
             promo=promo,
             promo_cost=promo_cost,
-            utm=utm
+            utm=utm,
+            payment_id=payment['id']
         )
-        from .helpers import create_payment
-        payment = create_payment(promo_cost, request.build_absolute_uri('login'))
         return redirect(payment['url'])
         
     context = {}
@@ -115,6 +114,12 @@ def lk(request):
         customer.first_name = request.GET['NAME']
         customer.phonenumber = request.GET['PHONE']
         customer.save()
-    
+    for order in Order.objects.filter(
+        customer=request.user.customer,
+        payment_status=False
+    ):
+        if check_payment(order.payment_id):
+            order.payment_status = True
+            order.save()
     context = {}
     return render(request, 'lk.html', context)

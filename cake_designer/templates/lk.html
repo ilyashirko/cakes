@@ -33,56 +33,57 @@
               </svg>
             </button>
           {% endif %}
-				</div>
-				<div class="d-flex">
-					<ul class="list-group">
-						<li class="list-group-item border-0 ps-0">
-							<span class="fs_40 cake_blue">Имя</span>
-						</li>
-						<li class="list-group-item border-0 ps-0">
-							<h1 class="fs_40 cake_blue">Телефон</h1>
-						</li>
-						<li class="list-group-item border-0 ps-0">
-							<h1 class="fs_40 cake_blue">Почта</h1>
-						</li>
-					</ul>
-					<ul class="list-group">
-						<li class="list-group-item border-0 py-61 position-relative">
-							{% if user.customer.first_name %}
-								<p class="form-control i my-2 cake__textinput">
-									{{ user.customer.first_name}}
-								</p>
-							{% else %}
-								<v-field v-model="Name" type="text" name="name_format" id="name" :readonly="!Edit" class="form-control my-2 i cake__textinput"></v-field>
-								<error-message name="name_format" class="position-absolute bottom-0 cake_pink fs_12"></error-message>
-							{% endif %}
-						</li>
-						<li class="list-group-item border-0 py-61 position-relative">
-							{% if user.customer.phonenumber %}
-								<p class="form-control i my-2 cake__textinput">
-									{{ user.customer.phonenumber}}
-								</p>
-							{% else %}
-								<v-field v-model="Phone" type="text" name="phone_format" id="phone" :readonly="!Edit" class="form-control my-2 cake__textinput"></v-field>
-								<error-message name="phone_format" class="position-absolute bottom-0 cake_pink fs_12"></error-message>
-							{% endif %}
-						</li>
-						<li class="list-group-item border-0 py-61 position-relative">
-							{% if user.customer.mailbox %}
-								<p class="form-control i my-2 cake__textinput">
-									{{ user.customer.mailbox}}
-								</p>
-							{% else %}
-								<v-field v-model="Email" type="text" name="email_format" id="email" :readonly="!Edit" class="form-control my-2 cake__textinput"></v-field>
-								<error-message name="email_format" class="position-absolute bottom-0 cake_pink fs_12"></error-message>
-							{% endif %}
-						</li>
-					</ul>
-				</div>
-			</v-form>
-			<h2 class="fs_40 cake_pink mt-5">Мои заказы</h2>
-			{% if user.customer.orders.all %}
-        {% for order in user.customer.orders.all %}
+		</div>
+		<div class="d-flex">
+			<ul class="list-group">
+				<li class="list-group-item border-0 ps-0">
+					<span class="fs_40 cake_blue">Имя</span>
+				</li>
+				<li class="list-group-item border-0 ps-0">
+					<h1 class="fs_40 cake_blue">Телефон</h1>
+				</li>
+				<li class="list-group-item border-0 ps-0">
+					<h1 class="fs_40 cake_blue">Почта</h1>
+				</li>
+			</ul>
+			<ul class="list-group">
+				<li class="list-group-item border-0 py-61 position-relative">
+					{% if user.customer.first_name %}
+						<p class="form-control i my-2 cake__textinput">
+							{{ user.customer.first_name}}
+						</p>
+					{% else %}
+						<v-field v-model="Name" type="text" name="name_format" id="name" :readonly="!Edit" class="form-control my-2 i cake__textinput"></v-field>
+						<error-message name="name_format" class="position-absolute bottom-0 cake_pink fs_12"></error-message>
+					{% endif %}
+				</li>
+				<li class="list-group-item border-0 py-61 position-relative">
+					{% if user.customer.phonenumber %}
+						<p class="form-control i my-2 cake__textinput">
+							{{ user.customer.phonenumber}}
+						</p>
+					{% else %}
+						<v-field v-model="Phone" type="text" name="phone_format" id="phone" :readonly="!Edit" class="form-control my-2 cake__textinput"></v-field>
+						<error-message name="phone_format" class="position-absolute bottom-0 cake_pink fs_12"></error-message>
+					{% endif %}
+				</li>
+				<li class="list-group-item border-0 py-61 position-relative">
+					{% if user.customer.mailbox %}
+						<p class="form-control i my-2 cake__textinput">
+							{{ user.customer.mailbox}}
+						</p>
+					{% else %}
+						<v-field v-model="Email" type="text" name="email_format" id="email" :readonly="!Edit" class="form-control my-2 cake__textinput"></v-field>
+						<error-message name="email_format" class="position-absolute bottom-0 cake_pink fs_12"></error-message>
+					{% endif %}
+				</li>
+			</ul>
+		</div>
+	</v-form>
+	<h2 class="fs_40 cake_pink mt-5">Мои заказы</h2>
+	{% if user.customer.orders.all %}
+    {% for order in user.customer.orders.all %}
+      {% if order.payment_status %}
           <section class="my-2">
             <span class="cake_blue lk__order d-flex" data-bs-toggle="modal" data-bs-target="#OrderModal{{ forloop.counter }}">
               {% if order.delivery.status %}
@@ -136,10 +137,11 @@
               </div>
             </aside>
           </section>
-        {% endfor %}
-			{% else %}
-        <span class="cake_grey">У вас еще нет заказов.</span>
-			{% endif %}
+      {% endif %}
+    {% endfor %}
+  {% else %}
+    <span class="cake_grey">У вас еще нет заказов.</span>
+  {% endif %}
 			<p class="cake_grey">Вы можете добавить торт из <a href="{% url 'index'%}#step2" class="text-decoration-none cake_pink">Каталога</a> или <a href="{% url 'index'%}#step3" class="text-decoration-none cake_pink">Создать свой</a>.</p>
 			<button onclick="location.href='{% url 'logout' %}'" class="btn text-white rounded-pill align-self-end px-5 mt-3 shadow-none cake__button cake__bg_pink">Выйти</button>
 		</div>

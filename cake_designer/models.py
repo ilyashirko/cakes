@@ -98,6 +98,14 @@ class Order(models.Model):
         auto_now_add=True,
         editable=False
     )
+    payment_id = models.CharField(
+        "Номер оплаты",
+        max_length=36,
+        validators=[MinLengthValidator(36)],
+        editable=False,
+        default=''
+    )
+    payment_status = models.BooleanField("Статус оплаты", default=False)
 
     def __str__(self):
         return (f'{self.created_at.date()}: {self.customer} - '

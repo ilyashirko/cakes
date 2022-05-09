@@ -26,5 +26,15 @@ def create_payment(amount, return_url):
     
     return {
         'id': payment['id'],
-        'url': payment['confirmation']['confirmation_url']
+        'url': payment['confirmation']['confirmation_url'],
+        'status': payment['paid'],
     }
+
+
+def check_payment(payment_id):
+    Configuration.account_id = settings.SHOP_ID
+    Configuration.secret_key = settings.YOOKASSA_API_KEY
+
+    payment = Payment.find_one(payment_id)
+    payment = json.loads(payment.json())
+    return payment['paid']

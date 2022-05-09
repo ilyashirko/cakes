@@ -120,7 +120,7 @@ Vue.createApp({
                 Berries: [0, 400, 300, 450, 500],
                 Decors: [0, 300, 400, 350, 300, 200, 280],
                 Words: 500,
-                Promo: [0, 400, 750, ]
+                Promo: [0, 400, 750]
             },
             Levels: 0,
             Form: 0,
@@ -129,13 +129,13 @@ Vue.createApp({
             Decor: 0,
             Words: '',
             Comments: '',
-            Promo: 0,
+            Promo: '',
             Designed: false,
 
             Name: '',
             Phone: null,
             Email: null,
-            Promo: null,
+            // Promo: 0,
             Address: null,
             Dates: null,
             Time: null,
@@ -151,9 +151,11 @@ Vue.createApp({
     computed: {
         Cost() {
             let W = this.Words ? this.Costs.Words : 0
+            let P1 = this.Promo == 'FIRST' ? this.Costs.Promo[2] : 0
+            let P2 = this.Promo == 'WYLSA' ? this.Costs.Promo[1] : 0
             return this.Costs.Levels[this.Levels] + this.Costs.Forms[this.Form] +
                 this.Costs.Toppings[this.Topping] + this.Costs.Berries[this.Berries] +
-                this.Costs.Decors[this.Decor] - this.Costs.Promo[this.Promo] + W
+                this.Costs.Decors[this.Decor] + W - P1 - P2
         }
     }
 }).mount('#VueApp')
