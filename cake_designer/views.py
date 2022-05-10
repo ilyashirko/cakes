@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import redirect, render
 
 from .helpers import check_payment, create_payment
@@ -115,12 +116,16 @@ def lk(request):
         customer.first_name = request.GET['NAME']
         customer.phonenumber = request.GET['PHONE']
         customer.save()
-    for order in Order.objects.filter(
-        customer=request.user.customer,
-        payment_status=False
-    ):
-        if check_payment(order.payment_id):
-            order.payment_status = True
-            order.save()
+    user = request.user
+    try:
+        for order in Order.objects.filter(
+            customer=user.customer,
+            payment_status=False
+        ):
+            if check_payment(order.payment_id):
+                order.payment_status = True
+                order.save()
+    except ObjectDoesNotExist:
+        pass
     context = {}
     return render(request, 'lk.html', context)
