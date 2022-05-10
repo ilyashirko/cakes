@@ -84,7 +84,7 @@ Vue.createApp({
                     if (value) {
                         return true;
                     }
-                    return false
+                    return ' промокод';
                 },
                 address: (value) => {
                     if (value) {
@@ -129,13 +129,12 @@ Vue.createApp({
             Decor: 0,
             Words: '',
             Comments: '',
-            Promo: '',
+            Promo: ' ',
             Designed: false,
 
             Name: '',
             Phone: null,
             Email: null,
-            // Promo: 0,
             Address: null,
             Dates: null,
             Time: null,

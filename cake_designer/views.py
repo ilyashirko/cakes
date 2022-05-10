@@ -18,7 +18,6 @@ from .models import (
 )
 
 
-# @login_required(login_url='login')
 def index(request):
     if 'utm_source' in request.GET:
         request.session["utm_source"] = request.GET["utm_source"]
