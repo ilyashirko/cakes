@@ -1,12 +1,33 @@
+# CakeBake
 
-.env:
-```
-SECRET_KEY=
-DEBUG=
-SHOP_ID=
-YOOKASSA_API_KEY=
-```
+Сайт магазина тортов с возможностью самостоятельной сборки торта покупателем. Предусмотрена оплата заказов через [ЮKassa](https://yookassa.ru/).
 
-[тестовый заказ](http://127.0.0.1:8000/?LEVELS=1&FORM=3&TOPPING=3&WORDS=&COMMENTS=&NAME=test&PHONE=%2B79111234567&EMAIL=test%40test.ru&ADDRESS=asdasdasdasd&DATE=2022-05-10&TIME=11%3A11&DELIVCOMMENTS=#step4)
+## Запуск
 
-[тестовые метки](http://127.0.0.1:8000/?utm_source=yandex&utm_medium=cpc&utm_campaign={campaign_id}&utm_content={ad_id}&utm_term={keyword})
+Для запуска в системе должен быть установлен Python 3.
+
+- Скачайте код
+
+- Установите зависимости командой `pip install -r requirements.txt`
+
+- Создайте базу данных командой `python3 manage.py migrate`
+
+- Создайте файл `.env` в директории `cakes` с переменными окружения:
+
+  <pre>
+  SECRET_KEY=*секретный ключ проекта, например `erofheronoirenfoernfx49389f43xf3984xf9384`*
+  DEBUG=*дебаг-режим. Поставьте `True`, чтобы увидеть отладочную информацию в случае ошибки. Выключается значением `False`*
+  SHOP_ID=*идентификатор магазина из <a href="https://yookassa.ru/my">личного кабинета</a> ЮKassa*
+  YOOKASSA_API_KEY=*ключ для аутентификации запросов к ЮKassa. Нужно получить в <a href="https://yookassa.ru/my/merchant/integration/api-keys">личном кабинете</a>*
+  </pre>
+  
+- Создайте учётную запись администратора командой `python3 manage.py createsuperuser`
+
+- Запустите сервер командой `python3 manage.py runserver`
+
+После этого главная страница будет доступна по адресу [127.0.0.1:8000](http://127.0.0.1:8000), админка — [127.0.0.1:8000/admin](http://127.0.0.1:8000/admin)
+
+
+## Цели проекта
+
+Код написан в учебных целях — это урок в курсе по Python и веб-разработке на сайте [Devman](https://dvmn.org).
