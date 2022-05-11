@@ -80,12 +80,6 @@ Vue.createApp({
                     }
                     return ' почту';
                 },
-                promo: (value) => {
-                    if (value) {
-                        return true;
-                    }
-                    return ' промокод';
-                },
                 address: (value) => {
                     if (value) {
                         return true;
@@ -152,7 +146,7 @@ Vue.createApp({
             let W = this.Words ? this.Costs.Words : 0
             let P1 = this.Promo == 'FIRST' ? this.Costs.Promo[2] : 0
             let P2 = this.Promo == 'WYLSA' ? this.Costs.Promo[1] : 0
-            let P3 = this.Promo == '' ? this.Costs.Promo[1] : 0
+            let P3 = this.Promo == null ? this.Costs.Promo[0] : 0
             return this.Costs.Levels[this.Levels] + this.Costs.Forms[this.Form] +
                 this.Costs.Toppings[this.Topping] + this.Costs.Berries[this.Berries] +
                 this.Costs.Decors[this.Decor] + W - P1 - P2
