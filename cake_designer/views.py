@@ -1,7 +1,5 @@
 from datetime import datetime
-from urllib.parse import urljoin
 
-from django.contrib.sites.shortcuts import get_current_site
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import redirect, render
@@ -75,7 +73,7 @@ def save_and_pay_order(request):
         promo_cost,
         request.build_absolute_uri('/accounts/profile/')
     )
-    order = Order.objects.create(
+    Order.objects.create(
         levels=levels,
         form=form,
         topping=topping,
