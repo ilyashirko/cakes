@@ -80,12 +80,6 @@ Vue.createApp({
                     }
                     return ' почту';
                 },
-                promo: (value) => {
-                    if (value) {
-                        return true;
-                    }
-                    return ' промокод';
-                },
                 address: (value) => {
                     if (value) {
                         return true;
@@ -129,7 +123,7 @@ Vue.createApp({
             Decor: 0,
             Words: '',
             Comments: '',
-            Promo: ' ',
+            Promo: '',
             Designed: false,
 
             Name: '',
