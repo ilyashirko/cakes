@@ -129,7 +129,7 @@ Vue.createApp({
             Decor: 0,
             Words: '',
             Comments: '',
-            Promo: ' ',
+            Promo: '',
             Designed: false,
 
             Name: '',
