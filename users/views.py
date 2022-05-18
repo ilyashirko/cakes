@@ -2,12 +2,13 @@ from django.contrib import messages
 from django.core.mail import EmailMessage
 from django.shortcuts import render, redirect
 from django.utils.crypto import get_random_string
+from string import ascii_letters, digits
 
 from .forms import UserRegisterForm
 
 
 def get_password():
-        chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
+        chars = ascii_letters + digits
         return get_random_string(12, chars)
 
 
