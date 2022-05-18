@@ -15,19 +15,20 @@ def get_password():
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
-        if form.is_valid():
-            password = get_password()
-            form.save(password)
-            email = form.cleaned_data.get('email')
-            EmailMessage(
-                subject='Регистрация на сайте CakeBake',
-                body=(
-                    f'Логин: {email}\nПароль: {password}'
-                ),
-                to=[email]
-            ).send()
-            messages.success(request, f'Логин и пароль выслан на ваш email')
-            return redirect('login')
+        if not form.is_valid():
+            return render(request, 'users/register.html', {'form': form})
+        password = get_password()
+        form.save(password)
+        email = form.cleaned_data.get('email')
+        EmailMessage(
+            subject='Регистрация на сайте CakeBake',
+            body=(
+                f'Логин: {email}\nПароль: {password}'
+            ),
+            to=[email]
+        ).send()
+        messages.success(request, f'Логин и пароль выслан на ваш email')
+        return redirect('login')
     else:
         form = UserRegisterForm()
     return render(request, 'users/register.html', {'form': form})
