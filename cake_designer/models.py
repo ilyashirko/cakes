@@ -78,23 +78,20 @@ class Order(models.Model):
     )
     cost = models.SmallIntegerField(
         "Стоимость",
-        default=env.int('DEFAULT_PRICE'),
         validators=[MinLengthValidator(0)],
-        null=True
+        blank=True
     )
     promo = models.ForeignKey(
         "Promo",
-        on_delete=models.SET_NULL,
-        default=0,
+        on_delete=models.SET(''),
         verbose_name="Промокод",
         related_name='orders',
-        null=True
+        blank=True
     )
     promo_cost = models.SmallIntegerField(
         "С учетом скидки",
-        default=env.int('DEFAULT_PRICE'),
         validators=[MinLengthValidator(0)],
-        null=True
+        blank=True
     )
     utm = models.ForeignKey(
         "Utm",
