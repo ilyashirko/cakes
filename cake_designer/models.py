@@ -5,7 +5,10 @@ from django.contrib.auth.models import User
 from django.core.validators import MinLengthValidator
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
+from environs import Env
 
+env = Env()
+env.read_env()
 
 class Order(models.Model):
     uuid = models.CharField(
@@ -75,21 +78,21 @@ class Order(models.Model):
     )
     cost = models.SmallIntegerField(
         "Стоимость",
-        default=None,
+        default=env.int('DEFAULT_PRICE'),
         validators=[MinLengthValidator(0)],
         null=True
     )
     promo = models.ForeignKey(
         "Promo",
         on_delete=models.SET_NULL,
-        default=None,
+        default=0,
         verbose_name="Промокод",
         related_name='orders',
         null=True
     )
     promo_cost = models.SmallIntegerField(
         "С учетом скидки",
-        default=None,
+        default=env.int('DEFAULT_PRICE'),
         validators=[MinLengthValidator(0)],
         null=True
     )
@@ -112,7 +115,7 @@ class Order(models.Model):
         max_length=36,
         validators=[MinLengthValidator(36)],
         editable=False,
-        default=''
+        blank=True
     )
     payment_status = models.BooleanField("Статус оплаты", default=False)
 
