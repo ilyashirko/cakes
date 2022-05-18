@@ -58,7 +58,6 @@ class Order(models.Model):
     )
     comment = models.TextField(
         "Комментарий",
-        max_length=10000,
         blank=True
     )
     customer = models.ForeignKey(
