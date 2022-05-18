@@ -73,7 +73,12 @@ class Order(models.Model):
         related_name='orders',
         null=True
     )
-    cost = models.SmallIntegerField("Стоимость", default=None, null=True)
+    cost = models.SmallIntegerField(
+        "Стоимость",
+        default=None,
+        validators=[MinLengthValidator(0)],
+        null=True
+    )
     promo = models.ForeignKey(
         "Promo",
         on_delete=models.SET_NULL,
@@ -82,7 +87,12 @@ class Order(models.Model):
         related_name='orders',
         null=True
     )
-    promo_cost = models.SmallIntegerField("С учетом скидки", default=None, null=True)
+    promo_cost = models.SmallIntegerField(
+        "С учетом скидки",
+        default=None,
+        validators=[MinLengthValidator(0)],
+        null=True
+    )
     utm = models.ForeignKey(
         "Utm",
         on_delete=models.PROTECT,
@@ -148,7 +158,10 @@ class Berry(models.Model):
 
 class Promo(models.Model):
     title = models.CharField("Название", max_length=30)
-    number = models.SmallIntegerField("Номинал")
+    number = models.SmallIntegerField(
+        "Номинал",
+        validators=[MinLengthValidator(0)],
+    )
     is_valid = models.BooleanField("Активен")
 
 
